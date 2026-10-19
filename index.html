@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Lynn 💌</title>
+<style>
+/* ===== Colours & base ===== */
+:root{--pink:#ff6fa5;--red:#e63462;--purple:#7b3fe4;--lav:#d9c8ff;--gold:#f5c76a;--white:#fff;
+--glass:rgba(255,255,255,.14);--font-script:'Brush Script MT','Segoe Script','Snell Roundhand',cursive;
+--font-serif:Georgia,'Times New Roman',serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-serif);color:var(--white);min-height:100vh;overflow-x:hidden;
+background:linear-gradient(160deg,#3a0f5c,#7b2a8f 40%,#c2336f 75%,#e63462);background-attachment:fixed}
+h1,h2,h3{font-family:var(--font-script);font-weight:normal;line-height:1.2}
+section{padding:70px 20px;max-width:760px;margin:0 auto;text-align:center}
+.card{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.3);border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.25);padding:28px}
+.btn{font:inherit;font-size:1.05rem;color:#fff;border:none;cursor:pointer;padding:14px 26px;border-radius:50px;
+background:linear-gradient(135deg,var(--pink),var(--red));box-shadow:0 0 18px rgba(255,111,165,.7);
+transition:transform .2s,box-shadow .2s;margin:8px}
+.btn:hover,.btn:focus-visible{transform:scale(1.06);box-shadow:0 0 30px rgba(255,111,165,1);outline:3px solid var(--gold)}
+.btn.soft{background:linear-gradient(135deg,var(--purple),#a46bff);box-shadow:0 0 18px rgba(123,63,228,.7)}
+.gold{color:var(--gold);text-shadow:0 0 14px rgba(245,199,106,.7)}
+.hidden{display:none!important}
+
+/* ===== Welcome screen ===== */
+#welcome{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:24px;text-align:center;background:radial-gradient(circle at 50% 40%,#c2336f,#3a0f5c 80%);transition:opacity 1s,transform 1s}
+#welcome.leave{opacity:0;transform:scale(1.15);pointer-events:none}
+#welcome h1{font-size:clamp(2rem,8vw,3.6rem);animation:glow 2.5s infinite alternate}
+#welcome p{max-width:480px;margin:18px 0 26px;font-size:1.15rem;font-style:italic}
+.bigheart{font-size:4rem;animation:beat 1.2s infinite}
+@keyframes glow{from{text-shadow:0 0 10px var(--pink)}to{text-shadow:0 0 28px var(--gold),0 0 50px var(--pink)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+#main{opacity:0;transition:opacity 1.5s}
+#main.show{opacity:1}
+
+/* ===== Floating hearts ===== */
+#hearts{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.fh{position:absolute;bottom:-50px;pointer-events:auto;cursor:pointer;animation:rise linear forwards;user-select:none}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.spark{position:fixed;pointer-events:none;z-index:60;animation:pop .8s ease-out forwards}
+@keyframes pop{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:40}
+
+/* ===== Letter ===== */
+.env{font-size:5rem;cursor:pointer;background:none;border:none;animation:beat 1.6s infinite}
+#letter{max-height:0;overflow:hidden;opacity:0;transition:max-height 2.5s ease,opacity 1.5s;
+background:#fff8f0;color:#5a2540;border-radius:14px;text-align:left;font-family:var(--font-script);
+font-size:clamp(1.2rem,4.2vw,1.55rem);line-height:1.6;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#letter.open{max-height:2200px;opacity:1;padding:28px;margin-top:20px}
+#letter p{margin-bottom:14px}
+
+/* ===== Reasons ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:26px}
+.reason{opacity:0;transform:translateY(30px);transition:all .8s}
+.reason.in{opacity:1;transform:none}
+.reason span{font-size:2.2rem;display:block;margin-bottom:8px}
+
+/* ===== Big question ===== */
+#ask{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
+#ask .line{opacity:0;transform:translateY(20px);transition:all 1.2s}
+#ask .line.in{opacity:1;transform:none}
+#ask h2{font-size:clamp(1.8rem,6vw,2.6rem)}
+#q{font-family:var(--font-serif);font-weight:bold;letter-spacing:2px;font-size:clamp(1.8rem,8vw,3.4rem);
+margin:22px 0;background:linear-gradient(90deg,var(--gold),#fff,var(--pink),var(--gold));background-size:300%;
+-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:300%}}
+.glowheart{font-size:5rem;filter:drop-shadow(0 0 25px #ff2d6f);animation:beat 1.3s infinite}
+#answer{margin-top:20px;min-height:20px}
+#thinkMsg,#yesBox{margin-top:18px}
+#yesBox h2{font-size:clamp(1.8rem,7vw,2.8rem);color:var(--gold)}
+
+/* ===== Rose ===== */
+.rosebtn{background:none;border:none;cursor:pointer;display:block;margin:10px auto}
+.rosebtn svg{width:170px;height:200px;overflow:visible}
+.petal{transform-origin:50px 62px;transform:scale(.15);transition:transform 1.4s cubic-bezier(.2,1.4,.4,1);fill:var(--red)}
+.rosebtn.bloom .petal{transform:scale(1)}
+#roseMsg{opacity:0;transition:opacity 1.5s;margin-top:10px;font-size:1.2rem}
+#roseMsg.in{opacity:1}
+
+/* ===== Final ===== */
+.final p{font-size:1.2rem;line-height:1.7;margin-bottom:16px}
+.sign{font-family:var(--font-script);font-size:1.8rem;color:var(--gold)}
+
+/* ===== Music player ===== */
+#player{position:fixed;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 14px;
+max-width:calc(100vw - 24px);border-radius:20px}
+.disc{width:54px;height:54px;border-radius:50%;flex:none;background:radial-gradient(circle,var(--gold) 0 12%,#222 13% 40%,#444 41% 44%,#111 45%);
+box-shadow:0 0 12px rgba(0,0,0,.5)}
+.playing .disc{animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meta{font-size:.78rem;line-height:1.3;min-width:0}
+.meta b{display:block;font-size:.9rem}
+#musicNote{color:var(--gold)}
+.bars{display:flex;gap:2px;align-items:flex-end;height:18px}
+.bars i{width:4px;height:4px;background:var(--gold);border-radius:2px}
+.playing .bars i{animation:bar .8s ease-in-out infinite alternate}
+.bars i:nth-child(2){animation-delay:.15s!important}.bars i:nth-child(3){animation-delay:.3s!important}
+.bars i:nth-child(4){animation-delay:.45s!important}.bars i:nth-child(5){animation-delay:.6s!important}
+@keyframes bar{to{height:18px}}
+.pbtn{background:rgba(255,255,255,.2);border:none;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem}
+.pbtn:focus-visible,.pbtn:hover{outline:2px solid var(--gold)}
+@media (max-width:420px){.meta b{font-size:.8rem}.disc{width:44px;height:44px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- Soft hearts & effects layers -->
+<div id="hearts" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<!-- Opening screen -->
+<div id="welcome">
+  <div class="bigheart" aria-hidden="true">💖</div>
+  <h1>Hey, Lynn Jepchirchir Kimutai ❤️</h1>
+  <p>I made something special for you, someone who deserves a little extra happiness today.</p>
+  <button class="btn" id="openBtn">Open Your Surprise 💌</button>
+</div>
+
+<main id="main">
+  <!-- Love letter -->
+  <section id="letterSec">
+    <h2 class="gold" style="font-size:2.4rem">A Letter For You</h2>
+    <button class="env" id="envBtn" aria-label="Open the love letter">💌</button>
+    <p id="tap" style="font-style:italic">Tap the envelope</p>
+    <div id="letter" aria-live="polite">
+      <p>Dear Lynn,</p>
+      <p>I don't know if words will ever be enough to explain how special you are, but I want to try.</p>
+      <p>There's something beautiful about you that makes me want to know you more, smile with you more, and create memories that we can look back on someday with happiness.</p>
+      <p>I don't want to rush anything or promise you a perfect fairytale. I just want a genuine chance to show you care, honesty, affection, laughter, and the little things that make someone feel loved.</p>
+      <p>If I could choose one thing today, it would be the chance to make you smile, to be someone you can talk to, and to build something beautiful with you, one moment at a time.</p>
+      <p>Lynn, you are special, and this little website is my way of asking you something that has been on my heart.</p>
+      <p>With affection and a hopeful heart,<br>Someone who would love the chance to be yours. ❤️</p>
+    </div>
+  </section>
+
+  <!-- Reasons -->
+  <section>
+    <h2 class="gold" style="font-size:2.4rem">Reasons You're Special</h2>
+    <div class="grid">
+      <div class="card reason"><span>😊</span>Your beautiful smile.</div>
+      <div class="card reason"><span>🌟</span>The happiness you bring.</div>
+      <div class="card reason"><span>🦋</span>Your unique personality.</div>
+      <div class="card reason"><span>🌸</span>The little things that make you who you are.</div>
+      <div class="card reason"><span>📸</span>The chance to create beautiful memories together.</div>
+    </div>
+  </section>
+
+  <!-- Rose -->
+  <section>
+    <h2 class="gold" style="font-size:2.4rem">A Digital Rose</h2>
+    <button class="rosebtn" id="rose" aria-label="Bloom the rose">
+      <svg viewBox="0 0 100 130" aria-hidden="true">
+        <path d="M50 70 V125" stroke="#3fae5a" stroke-width="4" fill="none"/>
+        <path d="M50 105 q-22 -6 -26 -22 q20 2 26 22" fill="#3fae5a"/>
+        <circle class="petal" cx="50" cy="42" r="30" style="fill:#b3123f"/>
+        <circle class="petal" cx="38" cy="45" r="20" style="fill:#e63462"/>
+        <circle class="petal" cx="62" cy="45" r="20" style="fill:#e63462"/>
+        <circle class="petal" cx="50" cy="34" r="18" style="fill:#ff6fa5"/>
+        <circle class="petal" cx="50" cy="46" r="9" style="fill:#ffd0e0"/>
+      </svg>
+    </button>
+    <p style="font-style:italic">Tap the rose</p>
+    <p id="roseMsg">This rose is a little reminder that someone thinks you're special. 🌹</p>
+  </section>
+
+  <!-- The big question -->
+  <section id="ask">
+    <div class="glowheart" aria-hidden="true">❤️</div>
+    <h2 class="line gold" id="l1">Lynn Jepchirchir Kimutai...</h2>
+    <p class="line" id="l2" style="font-size:1.3rem;margin-top:10px">There's something I've been wanting to ask you.</p>
+    <h2 class="line" id="q" role="heading" aria-level="2">WILL YOU BE MY GIRLFRIEND? ❤️</h2>
+    <div class="line" id="l3">
+      <button class="btn" id="yesBtn">YES, I'D LOVE TO! 💖</button>
+      <button class="btn soft" id="thinkBtn">Let me think about it 🥹</button>
+    </div>
+    <div id="answer" aria-live="polite">
+      <p id="thinkMsg" class="card hidden">That's okay, Lynn ❤️ Take your time. Your feelings matter, and I'll respect your decision.</p>
+      <div id="yesBox" class="card hidden">
+        <h2>YOU JUST MADE MY HEART SO HAPPY! ❤️🥹</h2>
+        <p style="margin:14px 0;line-height:1.7">Lynn, thank you for giving us a chance to write something beautiful together. Here's to genuine love, beautiful memories, laughter, honesty, and choosing each other one day at a time. ❤️</p>
+        <button class="btn" id="songBtn">Play Our Song 🎶</button>
+        <p id="songNote" class="gold" style="font-size:.9rem">Canon in D (public domain), played softly by your browser 🎶</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final message -->
+  <section class="final">
+    <div class="card">
+      <p>No matter what your answer is, Lynn, I'm glad I got the chance to tell you how I feel. You deserve happiness, kindness, and a love that respects you. ❤️</p>
+      <p class="sign">Made with love, just for Lynn. 💌</p>
+    </div>
+    <div style="height:90px"></div>
+  </section>
+</main>
+
+<!-- Music player -->
+<div id="player" class="card hidden" role="region" aria-label="Music player">
+  <div class="disc" aria-hidden="true"></div>
+  <div class="meta"><b>Canon in D</b>Pachelbel · soft love theme
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <span id="musicNote"></span>
+  </div>
+  <button class="pbtn" id="playBtn" aria-label="Play music">▶</button>
+  <button class="pbtn" id="muteBtn" aria-label="Mute music">🔊</button>
+</div>
+
+<script>
+/* ================= Setup ================= */
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $ = function (id) { return document.getElementById(id); };
+var player = $('player');
+
+/* ================= Floating hearts ================= */
+var heartEmojis = ['❤️', '💖', '💗', '💕', '🌸', '🌹'];
+function spawnHeart() {
+  var h = document.createElement('span');
+  h.className = 'fh';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.left = Math.random() * 95 + '%';
+  h.style.fontSize = (16 + Math.random() * 22) + 'px';
+  h.style.animationDuration = (7 + Math.random() * 6) + 's';
+  h.style.opacity = .85;
+  h.addEventListener('click', function (e) { sparkle(e.clientX, e.clientY); h.remove(); });
+  $('hearts').appendChild(h);
+  setTimeout(function () { h.remove(); }, 14000);
+}
+setInterval(function () { if (!document.hidden) spawnHeart(); }, reduce ? 3500 : 1100);
+
+/* Small sparkle burst at a point */
+function sparkle(x, y) {
+  for (var i = 0; i < 8; i++) {
+    var s = document.createElement('span');
+    s.className = 'spark';
+    s.textContent = i % 2 ? '✨' : '💛';
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    var a = (Math.PI * 2 * i) / 8, d = 40 + Math.random() * 30;
+    s.style.setProperty('--dx', Math.cos(a) * d + 'px');
+    s.style.setProperty('--dy', Math.sin(a) * d + 'px');
+    document.body.appendChild(s);
+    setTimeout(function (el) { el.remove(); }.bind(null, s), 900);
+  }
+}
+
+/* ================= Confetti & fireworks (canvas) ================= */
+var cv = $('fx'), ctx = cv.getContext('2d'), parts = [], running = false;
+function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+resize(); addEventListener('resize', resize);
+var colors = ['#ff6fa5', '#e63462', '#7b3fe4', '#d9c8ff', '#f5c76a', '#fff'];
+function confetti(n) {
+  for (var i = 0; i < n; i++) parts.push({x: Math.random() * cv.width, y: -10, vx: Math.random() * 4 - 2, vy: 2 + Math.random() * 4,
+    g: .05, life: 260, c: colors[i % 6], s: 5 + Math.random() * 6, heart: Math.random() < .3});
+  loop();
+}
+function firework(x, y) {
+  for (var i = 0; i < 40; i++) {
+    var a = Math.random() * 6.283, v = 1 + Math.random() * 5;
+    parts.push({x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: .06, life: 70, c: colors[i % 6], s: 3, heart: false});
+  }
+  loop();
+}
+function loop() {
+  if (running) return; running = true;
+  (function frame() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts = parts.filter(function (p) { return p.life > 0 && p.y < cv.height + 20; });
+    parts.forEach(function (p) {
+      p.x += p.vx; p.y += p.vy; p.vy += p.g; p.life--;
+      ctx.globalAlpha = Math.min(1, p.life / 40); ctx.fillStyle = p.c;
+      if (p.heart) { ctx.font = p.s * 2 + 'px serif'; ctx.fillText('❤', p.x, p.y); }
+      else ctx.fillRect(p.x, p.y, p.s, p.s);
+    });
+    if (parts.length) requestAnimationFrame(frame); else { running = false; ctx.clearRect(0, 0, cv.width, cv.height); }
+  })();
+}
+
+/* ================= Opening screen ================= */
+$('openBtn').addEventListener('click', function () {
+  $('welcome').classList.add('leave');
+  $('main').classList.add('show');
+  player.classList.remove('hidden');
+  if (!reduce) { confetti(80); for (var i = 0; i < 12; i++) spawnHeart(); }
+  setTimeout(function () { $('welcome').classList.add('hidden'); }, 1000);
+});
+
+/* ================= Letter ================= */
+$('envBtn').addEventListener('click', function () {
+  $('letter').classList.add('open');
+  $('tap').classList.add('hidden');
+  this.setAttribute('aria-label', 'Love letter opened');
+  setTimeout(function () { $('letter').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'}); }, 200);
+});
+
+/* ================= Scroll reveals ================= */
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold: .3});
+document.querySelectorAll('.reason').forEach(function (el, i) { el.style.transitionDelay = i * .15 + 's'; io.observe(el); });
+
+/* Big question: short staged reveal (no timer, no deadline) */
+var asked = false;
+new IntersectionObserver(function (entries, obs) {
+  if (entries[0].isIntersecting && !asked) {
+    asked = true; obs.disconnect();
+    [['l1', 300], ['l2', 1800], ['q', 3600], ['l3', 5000]].forEach(function (s) {
+      setTimeout(function () { $(s[0]).classList.add('in'); }, reduce ? 0 : s[1]);
+    });
+  }
+}, {threshold: .4}).observe($('ask'));
+
+/* ================= Rose ================= */
+$('rose').addEventListener('click', function () {
+  this.classList.add('bloom');
+  $('roseMsg').classList.add('in');
+  var r = this.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + 60);
+});
+
+/* ================= The answer ================= */
+$('yesBtn').addEventListener('click', function () {
+  $('thinkMsg').classList.add('hidden');
+  $('yesBox').classList.remove('hidden');
+  $('yesBox').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'});
+  confetti(220);
+  for (var i = 0; i < 8; i++) setTimeout(function () { firework(Math.random() * innerWidth, Math.random() * innerHeight * .6); }, i * 500);
+  for (var j = 0; j < 25; j++) setTimeout(spawnHeart, j * 120);
+  heartEmojis = ['❤️', '💖', '🌹', '💕', '🌹'];
+});
+$('thinkBtn').addEventListener('click', function () {
+  $('thinkMsg').classList.remove('hidden');   /* YES stays available */
+});
+
+/* ================= Music =================
+   "Canon in D" by Johann Pachelbel (17th century, public domain), played as a soft
+   synthesized arrangement by the browser's built-in Web Audio. No audio file needed,
+   no copyright issues. It only starts after a button tap. */
+var AC = window.AudioContext || window.webkitAudioContext;
+var actx, master, timer, nextBar = 0, barNo = 0, playing = false, muted = false;
+/* Each chord: [bass, then three upper notes] as MIDI note numbers */
+var CHORDS = [[38,62,66,69],[45,61,64,69],[47,62,66,71],[42,61,66,69],
+              [43,59,62,67],[38,62,66,69],[43,59,62,67],[45,61,64,69]];
+function mf(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+function note(f, t, d, type, v) {
+  var o = actx.createOscillator(), g = actx.createGain();
+  o.type = type; o.frequency.value = f;
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(v, t + .03);
+  g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + d + .05);
+}
+function scheduleBar(t, n) {
+  var c = CHORDS[n % 8], pat = n % 2 ? [3,2,1,2,3,2,1,2] : [1,2,3,2,3,2,3,2], i;
+  note(mf(c[0]), t, 4, 'triangle', .2);                         /* bass */
+  for (i = 1; i < 4; i++) note(mf(c[i]), t, 4, 'sine', .05);    /* soft pad */
+  for (i = 0; i < 8; i++) note(mf(c[pat[i]] + 12), t + i * .5, 1.3, 'sine', .09); /* arpeggio */
+}
+function tick() { while (nextBar < actx.currentTime + 2) { scheduleBar(nextBar, barNo++); nextBar += 4; } }
+function setPlaying(on) {
+  playing = on;
+  player.classList.toggle('playing', on);
+  $('playBtn').textContent = on ? '⏸' : '▶';
+  $('playBtn').setAttribute('aria-label', on ? 'Pause music' : 'Play music');
+}
+function playMusic() {
+  if (!AC) { $('musicNote').textContent = 'Music is not supported in this browser'; return; }
+  if (!actx) {
+    actx = new AC(); master = actx.createGain();
+    master.gain.value = muted ? 0 : .8; master.connect(actx.destination);
+    nextBar = actx.currentTime + .1; timer = setInterval(tick, 300);
+  }
+  actx.resume(); setPlaying(true);
+}
+function pauseMusic() { if (actx) actx.suspend(); setPlaying(false); }
+$('playBtn').addEventListener('click', function () { if (playing) pauseMusic(); else playMusic(); });
+$('muteBtn').addEventListener('click', function () {
+  muted = !muted;
+  if (master) master.gain.value = muted ? 0 : .8;
+  this.textContent = muted ? '🔇' : '🔊';
+  this.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+});
+$('songBtn').addEventListener('click', function () { if (!playing) playMusic(); });
+</script>
+</body>
+</html>
